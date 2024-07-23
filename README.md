@@ -17,3 +17,7 @@
 - `cd Wordlist-Query`
 - `chmod -X wordlist_query`
 - `sudo apt install figlet`  - If you are unable to see the logo as in the screenshot
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=owl234/Wordlist-Query&type=Date)](https://star-history.com/#owl234/Wordlist-Query&Date)
