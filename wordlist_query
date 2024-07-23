@@ -1,0 +1,70 @@
+#!/bin/bash
+figlet Wordlist Query
+echo ""
+echo "	                                                By owl234"
+# Function to display help message
+display_help() {
+  echo "Usage: $0 [-w <filename>] [-s <string>] [-h]"
+  echo ""
+  echo "Options:"
+  echo "  -w <filename>  Specify the path to the txt file to search."
+  echo "  -s <string>     Specify the string to search for in the file."
+  echo "  -h             Display this help message."
+  echo ""
+  exit 0
+}
+
+# Check if the -h option is present
+if [ "$1" == "-h" ]; then
+  display_help
+  exit 0
+fi
+
+# Get the filename and string from the arguments
+filename="$1"
+search_string="$2"
+
+while getopts "w:s:h" opt; do
+  case $opt in
+    w)
+      filename="$OPTARG"
+      ;;
+    s)
+      search_string="$OPTARG"
+      ;;
+    h)
+      display_help
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument."
+      exit 1
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG"
+      exit 1
+      ;;
+  esac
+done
+
+# Check if both filename and string are provided
+if [ -z "$filename" ] || [ -z "$search_string" ]; then
+  echo "Error: Both -w and -s options are required."
+  exit 1
+fi
+
+# Check if the file exists
+if [ ! -f "$filename" ]; then
+  echo "Error: File '$filename' does not exist."
+  exit 1
+fi
+
+# Search for the string
+grep -q "$search_string" "$filename"
+
+if [ $? -eq 0 ]; then
+  echo "String '$search_string' found in file '$filename'."
+else
+  echo "$search_string" >> "$filename"
+  echo "String '$search_string' added to file '$filename'."
+fi
+
